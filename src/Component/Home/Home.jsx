@@ -22,16 +22,20 @@ const Home = () => {
     } else {
       selectedActors.forEach((item) => {
         cost = cost + item.salary;
-         
       });
- setTotalCost(cost) ;
+
+      if(cost > 25000){
+        return alert ('Taka shesh')
+    }
+      setTotalCost(cost);
       const totalRemaining = 20000 - cost;
-   
+
       setRemaining(totalRemaining);
       setSelectedActors([...selectedActors, actor]);
     }
   };
 
+  
   return (
     <div className="flex gap-5  body px-4 pt-8 pb-5">
       {/* Card Container */}

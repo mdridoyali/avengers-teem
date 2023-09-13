@@ -40,11 +40,11 @@ const Home = () => {
           footer: '<a href="">Why do I have this issue?</a>',
         });
       } else {
+       
         setRemaining(remaining);
-
         setTotalCost(cost);
-
         setSelectedActors([...selectedActors, actor]);
+
       }
     }
   };
