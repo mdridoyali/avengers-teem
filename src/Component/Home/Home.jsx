@@ -4,13 +4,33 @@ import "./Home.css";
 import Card from "../Card/Card";
 const Home = () => {
   const [allActors, setAllActors] = useState([]);
+  const [selectedActors, setSelectedActors] = useState([]);
+  const [totalCost, setTotalCost] = useState(0);
+  const [remaining, setRemaining] = useState(0);
 
   useEffect(() => {
     fetch("data.json")
       .then((res) => res.json())
       .then((data) => setAllActors(data));
   }, []);
-  // console.log(allActors)
+
+  const handleSelectActor = (actor) => {
+    const isExit = selectedActors.find((item) => item.id === actor.id);
+    let cost = actor.salary;
+    if (isExit) {
+      return alert("Already Booked");
+    } else {
+      selectedActors.forEach((item) => {
+        cost = cost + item.salary;
+         
+      });
+ setTotalCost(cost) ;
+      const totalRemaining = 20000 - cost;
+   
+      setRemaining(totalRemaining);
+      setSelectedActors([...selectedActors, actor]);
+    }
+  };
 
   return (
     <div className="flex gap-5  body px-4 pt-8 pb-5">
@@ -32,7 +52,10 @@ const Home = () => {
               <p>Salary: ${actor.salary}</p>
               <p>Role: {actor.role}</p>
             </div>
-            <button className="bg-purple-600 px-5 py-1 rounded-lg font-bold ">
+            <button
+              onClick={() => handleSelectActor(actor)}
+              className="bg-purple-600 px-5 py-1 rounded-lg font-bold "
+            >
               Select
             </button>
           </div>
@@ -41,14 +64,11 @@ const Home = () => {
 
       {/* Card / Aside bar */}
       <div className=" text-white border md:w-2/5 lg:w-1/4">
-        <Card>{
-            
-        }</Card>
-        {/* <Cart */}
-        {/* selectedActors={selectedActors}
-                remaining={remaining}
-                totalCost={totalCost} */}
-        {/* ></Cart> */}
+        <Card
+          selectedActors={selectedActors}
+          totalCost={totalCost}
+          remaining={remaining}
+        ></Card>
       </div>
     </div>
   );
